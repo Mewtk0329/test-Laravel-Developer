@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>หาค่า Array </title>
+</head>
+
+<body>
+    <h1>หาค่า Array</h1>
+    <p>ป้อน ตัวเลข และ ค่าผลลัพท์ โดยคั่นด้วยเครื่องหมาย ",":</p>
+    <input type="text" id="inputArray">
+    <input type="number" id="inputSum">
+    <button onclick="findSum()">หาผลลัพท์</button>
+    <p id="output"></p>
+
+</body>
+
+</html>
+
+<script>
+    function findSum() {
+        const inputArray = document.getElementById("inputArray").value;
+        const inputSum = parseInt(document.getElementById("inputSum").value);
+        const nums = inputArray.split(",").map(num => parseInt(num.trim()));
+        const result = Sum(nums, inputSum);
+        const output = document.getElementById("output");
+        if (result) {
+            output.innerHTML = `ตำแหน่ง ที่รวมกันได้  ${inputSum} คือ: ${result[0]} และ ${result[1]}.`;
+        } else {
+            output.innerHTML = `ไม่มี 2 ตำแหน่งใดที่รวมกันได้  ${inputSum} `;
+        }
+    }
+
+    function Sum(nums, target) {
+        const complements = new Map();
+        for (let i = 0; i < nums.length; i++) {
+            const complement = target - nums[i];
+            if (complements.has(complement)) {
+                return [complements.get(complement), i];
+            }
+            complements.set(nums[i], i);
+        }
+        return null;
+    }
+</script>
